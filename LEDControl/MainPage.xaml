@@ -7,7 +7,39 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.Resources>
+        <CollectionViewSource x:Name="DeviceListSource"/>
+        <Style x:Key="SampleHeaderTextStyle" TargetType="TextBlock" BasedOn="{StaticResource TitleTextBlockStyle}">
+            <Setter Property="FontSize" Value="28"/>
+        </Style>
+    </Page.Resources>
 
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid x:Name="RootGrid" Margin="12,20,12,12">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <StackPanel Margin="0,0,0,10">
+                <TextBlock Text="Device Selection" Style="{StaticResource SampleHeaderTextStyle}"/>
+            </StackPanel>
+            <ScrollViewer Grid.Row="1" VerticalScrollMode="Auto" VerticalScrollBarVisibility="Auto">
+                <StackPanel Orientation="Vertical" Margin="0,10,0,0" Grid.Row="1">
+                    <StackPanel Orientation="Horizontal" Margin="0,10,0,0" Grid.Row="1">
+                        <Button x:Name="ButtonConnectToDevice" Content="Connect to device" Margin="0,0,10,0" Click="ConnectToDevice_Click"/>
+                        <Button x:Name="ButtonDisconnectFromDevice"  Content="Disconnect from device" Margin="0,0,10,0" Click="DisconnectFromDevice_Click"/>
+                    </StackPanel>
+                    <TextBlock Text="Select a Serial Device:"/>
+                    <ListBox x:Name="ConnectDevices" ItemsSource="{Binding Source={StaticResource DeviceListSource}}"  Height="250" Background="Gray">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding InstanceId}"/>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
     </Grid>
 </Page>
